@@ -17,28 +17,29 @@ module "network" {
 }
 
 
+module "vm_instance_template" {
+  source  = "terraform-google-modules/vm/google//modules/instance_template"
+#   version = "13.7.0"
+  # insert the 2 required variables here
+  project_id                   = var.project-id
+  region                       = var.region
+  subnetwork                   = "custom-subnet"
+  network = module.network.network_name
+  machine_type = "f1-micro"
+  source_image_family = "debian-11"
+  source_image_project = "debian-cloud"
+  subnetwork_project = var.project-id
+}
 
 
 
 
-# module "vm_compute_instance" {
-#   source  = "terraform-google-modules/vm/google//modules/compute_instance"
-#   # insert the 1 required variable here
-# }
+module "vm_compute_instance" {
+  source  = "terraform-google-modules/vm/google//modules/compute_instance"
+  # insert the 1 required variable here
+  instance_template = module.vm_instance_template.self_link
+#   project_id        = var.project-id
+  zone              = "us-central1-a"
+}
 
-# module "vm_instance_template" {
-#   source  = "terraform-google-modules/vm/google//modules/instance_template"
-# #   version = "13.7.0"
-#   # insert the 2 required variables here
-#   project_id                   = var.project_id
-#   region                       = var.region
-#   subnetwork                   = var.subnetwork
-#   stack_type                   = "IPV4_ONLY"
-#   service_account              = var.service_account
-#   name_prefix                  = "simple"
-#   tags                         = var.tags
-#   labels                       = var.labels
-#   access_config                = [local.access_config]
-#   enable_nested_virtualization = var.enable_nested_virtualization
-#   threads_per_core             = var.threads_per_core
-# }
+# 
