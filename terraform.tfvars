@@ -1,8 +1,2 @@
 project-id = "terracloudlabs91"
 region = "us-central1"
-vm-name = "my-vm-instance"
-vm-type = "f1-micro"
-vm-zone = "us-central1-a"
-os-name = "debian-cloud/debian-11"
-network-name = "default"
-numberofvms = "1"
